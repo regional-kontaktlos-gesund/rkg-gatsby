@@ -29,7 +29,7 @@ function ListItemLink(props) {
     return <ListItem button component="a" {...props} />;
 }
 
-const Order = () => {
+const Order = ({handleOpen}) => {
     const classes = useStyles();
     const [order, setOrder] = useState([])
     const [total, setTotal] = useState(false)
@@ -120,8 +120,9 @@ const Order = () => {
                         </ListItemText>
                     </ListItem>
                     <Divider />
-                    <div style={{padding: '20px 0', display: 'flex', justifyContent:'flex-end'}}>
-                        <Button variant="contained">Bezahlen</Button>
+                    <div style={{padding: '20px 0', display: 'flex', justifyContent:'space-between'}}>
+                        <Button variant="contained" color="secondary" variant="outlined" onClick={handleOpen}>Abbrechen</Button>
+                        <Button variant="contained" color="primary" >Bezahlen</Button>
                     </div>
                 </List>
             </Paper>
