@@ -5,7 +5,6 @@ import { mock } from '../utils/mock'
 const mapStyles = {
     width: '100%',
     height: '100%',
-    maxHeight: '500px',
     maxWidth: '1200px',
     margin: '0 auto'
   };

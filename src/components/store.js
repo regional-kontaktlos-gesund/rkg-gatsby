@@ -1,8 +1,11 @@
 import React from 'react'
+import Order from './order'
 
 const Store = (props) => {    
     return(
-        <h1>{props.path}</h1>
+        <React.Fragment>
+            <Order/>  
+        </React.Fragment>
     )
 }
 export default Store
