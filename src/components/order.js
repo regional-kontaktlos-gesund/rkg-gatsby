@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import { products } from '../utils/mock'
 import { formatPrice } from '../utils'
 import ListSubheader from '@material-ui/core/ListSubheader';
-
+import CheckOutMap from './checkoutMap'
 import Paper from '@material-ui/core/Paper';
 
 
@@ -34,6 +34,7 @@ const Order = ({handleOpen}) => {
     const [order, setOrder] = useState([])
     const [total, setTotal] = useState(false)
     const [totalNames, setTotalNames] = useState(false)
+    const [step, setStep] = useState(1)
 
     const increase = (i) => {
 
@@ -68,7 +69,8 @@ const Order = ({handleOpen}) => {
             let amountPrice = products && products[item] && products[item].price * order[item].amount;
             let name = {
                 name: products[item].name,
-                amount: order[item].amount
+                amount: order[item].amount,
+                price: amountPrice
             }
             if (order[item].amount > 0) {
                 newTotalNames = [...newTotalNames, name]
@@ -83,6 +85,7 @@ const Order = ({handleOpen}) => {
 
     return (
         <div className={classes.root}>
+            {step === 1 &&
             <List component="nav" aria-label="main mailbox folders">
                 {products.map((product, i) =>
                     <React.Fragment key={product._id}>
@@ -108,6 +111,9 @@ const Order = ({handleOpen}) => {
                     </React.Fragment>
                 )}
             </List>
+            }
+
+            {step === 1 &&
             <Paper elevation={4}>
                 <List style={{ padding: '0 20px' }} subheader={<ListSubheader>EINKAUF</ListSubheader>} >
                     <ListItem>
@@ -115,17 +121,57 @@ const Order = ({handleOpen}) => {
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>{totalNames && totalNames.map(name => name.amount+'X '+name.name+' ')}</div>
                                 <div>{formatPrice({ centAmount: total })}</div>
-
                             </div>
                         </ListItemText>
                     </ListItem>
                     <Divider />
                     <div style={{padding: '20px 0', display: 'flex', justifyContent:'space-between'}}>
                         <Button variant="contained" color="secondary" variant="outlined" onClick={handleOpen}>Abbrechen</Button>
-                        <Button variant="contained" color="primary" >Bezahlen</Button>
+                        <Button variant="contained" color="primary" onClick={() => setStep(2)} disabled={totalNames.length ? false : true}>Bezahlen</Button>
                     </div>
                 </List>
             </Paper>
+            }
+
+            {step === 2 || step === 3 &&
+            <Paper elevation={4}>
+                <List style={{ padding: '0 20px' }} subheader={<ListSubheader>ABSCHLUSS</ListSubheader>} >
+                    {totalNames && totalNames.map(name =>(
+                        <ListItem>
+                            <ListItemText>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div>{name.amount+'X '+name.name+' '}</div>
+                                    <div>{formatPrice({ centAmount: name.price })}</div>
+                                </div>
+                            </ListItemText>
+                        </ListItem>
+                    ))}
+                    <Divider />
+                    <ListItem>
+                        <ListItemText>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div><b>Gesamt</b></div>
+                            <div>{formatPrice({ centAmount: total })}</div>
+                        </div>
+                        </ListItemText>
+                    </ListItem>
+                    {step == 2 &&
+                        <div style={{padding: '20px 0', display: 'flex', justifyContent:'space-between'}}>
+                            <Button variant="contained" color="secondary" variant="outlined" onClick={handleOpen}>Abbrechen</Button>
+                            <Button variant="contained" color="primary" onClick={() => setStep(3)}>Bestätigen</Button>
+                        </div>
+                    }
+                </List>
+            </Paper>
+            }
+
+            {/* {step === 3 && */}
+            <div>
+            <CheckOutMap/>
+            </div>
+                
+            {/* } */}
+
         </div>
     );
 }
