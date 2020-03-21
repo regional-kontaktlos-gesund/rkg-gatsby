@@ -133,7 +133,7 @@ const Order = ({handleOpen}) => {
             </Paper>
             }
 
-            {step === 2 || step === 3 &&
+            {(step === 2 || step === 3)  &&
             <Paper elevation={4}>
                 <List style={{ padding: '0 20px' }} subheader={<ListSubheader>ABSCHLUSS</ListSubheader>} >
                     {totalNames && totalNames.map(name =>(
@@ -165,12 +165,11 @@ const Order = ({handleOpen}) => {
             </Paper>
             }
 
-            {/* {step === 3 && */}
-            <div>
-            <CheckOutMap/>
-            </div>
-                
-            {/* } */}
+            {step === 3 && 
+                <div>
+                <CheckOutMap/>
+                </div>
+            }
 
         </div>
     );
