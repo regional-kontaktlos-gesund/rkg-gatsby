@@ -1,21 +1,15 @@
 import axios from 'axios'
 
-export function instancesError(bool) {
+export function loading(bool) {
     return {
-        type: 'INSTANCES_ERROR',
+        type: 'LOADING',
         error: bool
     };
 }
-export function instancesLoading(bool) {
-    return {
-        type: 'INSTANCES_LOADING',
-        loading: bool
-    };
-}
 
-export function stores(stores) {
+export function setStores(stores) {
     return {
-        type: 'SET_INSTANCE',
+        type: 'SET_STORES',
         stores
     };
 }
@@ -26,12 +20,11 @@ export const getStores = () => {
         dispatch(loading(true))
         const options = {
             method: 'GET',
-            url: 'api'
+            url: 'https://rkg-api-602.herokuapp.com/api/stores'
         };
         axios(options)
             .then(function (response) {     
-                console.log(response);
-                dispatch(stores(false))
+                dispatch(setStores(response))
             })
             .catch(function (error) {
                 console.log(error);

@@ -3,19 +3,25 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 
 const mapStyles = {
     width: '100%',
-    height: '100%',
+    height: '300px',
     maxWidth: '1200px',
-    margin: '0 auto'
+    margin: '0 auto',
+    padding: '20px 0'
   };
 
 const CheckOutMap = ({ google }) => {
 
     return (
+        <React.Fragment>
         <Map
             google={google}
-            zoom={6}
+            zoom={8}
             style={mapStyles}
-            initialCenter={{ lat: 51.169872, lng: 10.243474}}
+            className="foo"
+            initialCenter={{ 
+                lat: 47.9959,
+                lng: 7.85222
+            }}
         >
         <Marker 
             position={{
@@ -24,6 +30,7 @@ const CheckOutMap = ({ google }) => {
             }}
         />
         </Map>
+        </React.Fragment>
     );
 }
 

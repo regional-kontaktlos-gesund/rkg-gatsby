@@ -79,8 +79,6 @@ const Order = ({handleOpen}) => {
         }
         setTotal(newTotal.reduce((a, b) => a + b, 0))
         setTotalNames(newTotalNames)
-        console.log(totalNames);
-
     }, [order])
 
     return (
@@ -161,15 +159,24 @@ const Order = ({handleOpen}) => {
                             <Button variant="contained" color="primary" onClick={() => setStep(3)}>Bestätigen</Button>
                         </div>
                     }
+                    {step === 3 && 
+                    <div>
+                    <div style={{height: '300px', position:'relative'}}>
+                        <CheckOutMap/>
+                    </div>
+                    <div>Schmidt</div>
+                    <div>Bürgerwiese 4, 01069 Dresden</div>
+                    <div style={{padding: '20px 0', display: 'flex', justifyContent:'space-between'}}>
+                            <Button variant="contained" color="secondary" variant="outlined" >Navigation</Button>
+                            <Button variant="contained" color="primary" onClick={() => setStep(0)}>Angekommen</Button>
+                        </div>
+                    </div>
+                    }
                 </List>
             </Paper>
             }
 
-            {step === 3 && 
-                <div>
-                <CheckOutMap/>
-                </div>
-            }
+
 
         </div>
     );
