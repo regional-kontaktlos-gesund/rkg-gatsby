@@ -5,8 +5,6 @@ import { Router } from "@reach/router"
 import Layout from "../components/layout"
 
 const StoresPage = (props) => {
-console.log(props['*']);
-
   return(
     <Layout>
       <Router basepath="/stores">
