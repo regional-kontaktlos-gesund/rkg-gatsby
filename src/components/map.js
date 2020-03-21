@@ -17,10 +17,18 @@ const MapContainer = ({ google }) => {
     const [activeProps, setActiveProps] = useState(false)
 
     const handleClick =  (props, marker, e) => {
-        console.log(props);
         setActiveMarker(marker)
         setVisible(true)
         setActiveProps(props)
+    }
+
+    if (navigator && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+        })
     }
 
     const markers = mock.map((store, i) => (
