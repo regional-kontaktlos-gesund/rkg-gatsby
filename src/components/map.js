@@ -1,21 +1,58 @@
-import React from 'react'
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import React, {useState} from 'react'
+import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import { mock } from '../utils/mock'
 
 const mapStyles = {
     width: '100%',
     height: '100%',
+    maxHeight: '500px',
+    maxWidth: '1200px',
+    margin: '0 auto'
   };
 
-const MapContainer = ({google}) => {
-console.log(process.env.GATSBY_MAPS_KEY);
+const MapContainer = ({ google }) => {
+
+    const [activeMarker, setActiveMarker] = useState(false)
+    const [visible, setVisible] = useState(false)
+    const [activeProps, setActiveProps] = useState(false)
+
+    const handleClick =  (props, marker, e) => {
+        console.log(props);
+        setActiveMarker(marker)
+        setVisible(true)
+        setActiveProps(props)
+    }
+
+    const markers = mock.map((store, i) => (
+        <Marker 
+            key={i} id={i} 
+            name={store.name}
+            position={{
+                lat: store.latitude,
+                lng: store.longitude
+            }}
+            onClick={handleClick}
+        />
+    ))    
+
+    
 
     return (
         <Map
             google={google}
-            zoom={8}
+            zoom={6}
             style={mapStyles}
-            initialCenter={{ lat: 47.444, lng: -122.176}}
-        />
+            initialCenter={{ lat: 51.169872, lng: 10.243474}}
+        >
+        <InfoWindow
+          marker={activeMarker}
+          visible={visible}>
+            <div>
+                {activeProps.name}
+            </div>
+        </InfoWindow>
+            {markers}
+        </Map>
     );
 }
 

@@ -24,14 +24,7 @@ const IndexPage = () => {
   return(
     <Layout>
       <SEO title="Home" />
-      <Grid spacing={3}>
-        <Grid item xs={12}>
-          <h1>Regional, Kontaktlos, Gesund</h1>
-        </Grid>
-        <Grid item xs={10}>
           <MapContainer />
-        </Grid>
-      </Grid>
     </Layout>
   )
   }
