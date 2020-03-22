@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "gatsby"
-import axios from 'axios'
+
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
@@ -41,11 +41,15 @@ const IndexPage = () => {
   const handleStore = (store) => {
     setActiveStore(store)
   }
-  const fetchData = async() => {
-        const result = await axios(
-          'https://rkg-api-602.herokuapp.com/api/stores',
-        );
-        setStores(result.data)
+  const fetchData = () => {
+    fetch('https://rkg-api-602.herokuapp.com/api/stores')
+      .then((response) => response.json())
+      .then((data) => {
+        setStores(data)
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
   useEffect(() => {
     fetchData()
@@ -61,7 +65,7 @@ const IndexPage = () => {
         <div className={classes.root}>
           <List component="nav" aria-label="stores">
 
-            {stores && stores.map(store =>
+            {stores && stores.length && stores.map(store =>
               <React.Fragment key={store._id}>
 
                 <ListItem button>
