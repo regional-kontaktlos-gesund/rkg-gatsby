@@ -56,15 +56,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar({title}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" >
-            Erntefrisch
+            {title ? title : 'Erntefrisch'}
           </Typography>
         </Toolbar>
       </AppBar>

@@ -24,6 +24,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import QRCode from 'qrcode.react'
 import RoomIcon from '@material-ui/icons/Room';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Layout from '../components/layout'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -94,16 +95,37 @@ const Order = ({ handleOpen, store }) => {
 
     useEffect(() => {
         if (step === 4) {
-            setTimeout(function () { setStep(5) }, 2000);
+            setTimeout(function () { setStep(5) }, 3000);
         }
     }, [step])
 
 
     let orderSring = totalNames && totalNames.map(name => name.amount + 'x ' + name.name)
+    let title = ''
+    
+    switch(step){
+        case 1:
+            title = store.name
+            break;
+        case 2:
+            title = 'Einkauf'
+            break;
+        case 3:
+            title = 'Einkauf'
+            break;
+
+        case 4:
+            title = 'Abholung'
+            break;
+        default:
+            title = ''
+    }
+
 
     return (
+        <Layout title={title}>
         <div className={classes.root}>
-            <div style={{ background: '#4bb87c', color: '#ffffff', fontFamily: 'roboto', padding: "20px" }}>
+            <div>
                 {step < 3 &&
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                         <Link to="/">
@@ -124,13 +146,6 @@ const Order = ({ handleOpen, store }) => {
                         </a>
                     </div>
                 }
-                <Typography>
-                    {step === 1 && store.name}
-                    {step === 2 && 'Einkauf'}
-                    {step === 3 && 'Einkauf'}
-                    {step === 4 && 'Abholung'}
-
-                </Typography>
             </div>
 
             {step === 1 &&
@@ -184,7 +199,7 @@ const Order = ({ handleOpen, store }) => {
                         </ListItem>
                         <Divider />
                         <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'space-between' }}>
-                            <Button variant="contained" color="secondary" variant="outlined" onClick={handleOpen}>Abbrechen</Button>
+                            <Link to="/"><Button variant="contained" color="secondary" variant="outlined" variant="outlined">Abbrechen</Button></Link>
                             <Button variant="contained" color="primary" onClick={() => setStep(2)} disabled={totalNames.length ? false : true}>Bezahlen</Button>
                         </div>
                     </List>
@@ -193,7 +208,7 @@ const Order = ({ handleOpen, store }) => {
 
             {(step != 1) &&
                 <Paper>
-                    <List style={{ padding: '0 20px 200px 20px' }} subheader={<ListSubheader>{step < 5 ? 'ABSCHLUSS' : 'ABHOLUNG'}</ListSubheader>} >
+                    <List style={{ padding: '60px 20px 200px 20px' }} >
                         {step !== 5 && totalNames && totalNames.map(name => (
                             <ListItem>
                                 <ListItemText>
@@ -204,7 +219,9 @@ const Order = ({ handleOpen, store }) => {
                                 </ListItemText>
                             </ListItem>
                         ))}
+
                         <Divider />
+
                         <ListItem>
                             <ListItemText>
                                 {step !== 5 &&
@@ -261,7 +278,7 @@ const Order = ({ handleOpen, store }) => {
                                 >
                                  
                                     <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'space-between' }}>
-                                        <a href={"https://maps.google.com/?q=" + store.latitude + "," + store.longitude}><Button variant="contained" color="primary">Navigation</Button></a>
+                                        <a href={"https://maps.google.com/?q=" + store.latitude + "," + store.longitude}><Button variant="contained" color="secondary">Navigation</Button></a>
                                         <Button variant="contained" color="primary" onClick={() => setStep(4)}>Angekommen</Button>
                                     </div>
                                 </Paper>
@@ -299,6 +316,8 @@ const Order = ({ handleOpen, store }) => {
                 </Paper>
             }
         </div>
+              </Layout>
+
     );
 }
 

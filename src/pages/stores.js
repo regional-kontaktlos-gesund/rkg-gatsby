@@ -7,11 +7,9 @@ import Layout from "../components/layout"
 
 const StoresPage = (props) => {
   return(
-      <Layout>
         <Router basepath="/stores">
           <Store path={props['*']} />
         </Router>
-      </Layout>
     )
   }
 

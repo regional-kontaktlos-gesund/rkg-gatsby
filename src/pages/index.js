@@ -15,7 +15,12 @@ import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    height: '50vh',
+    width:'100%',
+    position:'fixed',
+    bottom:'0',
+    left:'0',
+    overflow: 'auto'
   },
   paper: {
     padding: theme.spacing(2),
@@ -52,25 +57,28 @@ const IndexPage = () => {
     <Layout>
       <SEO title="Home" />
       <div >
-        <div style={{height:'50vh'}}><MapContainer stores={stores} activeStore={activeStore} /></div>
+        <div style={{height:'50vh'}}>
+          <MapContainer stores={stores} activeStore={activeStore} />
+        </div>
         <div className={classes.root}>
         <List component="nav" aria-label="stores">
 
         {stores.map(store =>
            <React.Fragment key={store._id}>
-                         <Link to={'/stores/'+store._id} >
 
             <ListItem button>
+            <Link to={'/stores/'+store._id} style={{width:'100%'}}>
 
               <ListItemText
                 primary={store.name}
                 secondary={store.products.map(product => product.name+', ')}
               />
+                                        <Divider />
+              </Link>
+
             </ListItem>
-            </Link>
 
 
-          <Divider />
           </React.Fragment>
         )}
         </List>

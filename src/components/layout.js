@@ -20,7 +20,7 @@ const theme = createMuiTheme({
   }
 });
 
-const Layout = ({ children }) => {
+const Layout = ({ children, title}) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -33,7 +33,7 @@ const Layout = ({ children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header siteTitle={data.site.siteMetadata.title} />
+      <Header siteTitle={data.site.siteMetadata.title} title={title}/>
       <SEO title={data.site.siteMetadata.title}/>
         <main id="main">{children}</main>
         {/* <footer>

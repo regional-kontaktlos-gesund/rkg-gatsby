@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'gatsby'
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import Button from '@material-ui/core/Button';
 
@@ -40,7 +41,7 @@ const CheckoutForm = ({handleStep}) => {
       <CardElement />
       </div>
       <div style={{padding: '20px 20px', display: 'flex', justifyContent:'space-between'}}>
-            <Button variant="contained" color="secondary" variant="outlined">Abbrechen</Button>
+            <Link to="/"><Button variant="contained" color="secondary" variant="outlined">Abbrechen</Button></Link>
             {/* <Button type="submit" variant="contained" color="primary">Kaufen</Button> */}
             <Button variant="contained" color="primary" onClick={()=>handleStep(3)}>Kaufen</Button>
 
