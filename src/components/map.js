@@ -61,11 +61,11 @@ const MapContainer = ({ google, stores, activeStore }) => {
     ))
 
     return (
-        <Map
+        <Map 
             google={google}
-            zoom={8}
+            zoom={9}
             style={mapStyles}
-            initialCenter={{ lat: 52.499942, lng: 10.521213 }}
+            initialCenter={{ lat: 52.428736, lng: 10.48796}}
             onClick={onMapClicked}
             disableDefaultUI={true}
         >
@@ -81,12 +81,12 @@ const MapContainer = ({ google, stores, activeStore }) => {
                         title="Contemplative Reptile"
                         />
                         <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
+                        <Typography gutterBottom variant="h6">
                         {activeProps.name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
                             {activeProps && activeProps.products && activeProps.products.map(product => 
-                                product.name
+                                <div>{product.name}</div>
                             )}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
