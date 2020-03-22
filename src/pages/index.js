@@ -47,29 +47,24 @@ const IndexPage = ({location}) => {
         <div style={{ height: '50vh', overflow: 'hidden' }}>
           <MapContainer stores={stores} activeStore={activeStore} />
         </div>
-        <div className={classes.root}>
-          <List component="nav" aria-label="stores">
+        {stores &&  
+          <div className={classes.root}>
+            <List component="nav" aria-label="stores">
+              {stores.map(store =>
+                  <ListItem button  key={store._id}>
+                    <Link to={'/stores/' + store._id} style={{ width: '100%' }}>
 
-            {stores && stores.length && stores.map(store =>
-              <React.Fragment key={store._id}>
-
-                <ListItem button>
-                  <Link to={'/stores/' + store._id} style={{ width: '100%' }}>
-
-                    <ListItemText
-                      primary={store.name}
-                      secondary={store.products.map(product => product.name + ', ')}
-                    />
-                    <Divider />
-                  </Link>
-
-                </ListItem>
-
-
-              </React.Fragment>
-            )}
-          </List>
-        </div>
+                      <ListItemText
+                        primary={store.name}
+                        secondary={store.products.map(product => product.name + ', ')}
+                      />
+                      <Divider />
+                    </Link>
+                  </ListItem>
+              )}
+            </List>
+          </div>
+        }
       </div>
     </Layout>
   )
