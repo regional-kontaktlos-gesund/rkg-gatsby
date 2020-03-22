@@ -9,3 +9,15 @@ export const formatPrice = ({ centAmount, currencyCode, fractionDigits }) => {
     }
     return euroAmount.toLocaleString("de-DE", options);
   }
+
+
+export const fetchData = (enpoint) => {
+    fetch('https://rkg-api-602.herokuapp.com/api/'+enpoint)
+    .then((response) => response.json())
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }

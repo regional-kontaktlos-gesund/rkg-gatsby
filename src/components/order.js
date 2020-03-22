@@ -16,7 +16,9 @@ import { formatPrice } from '../utils'
 import ListSubheader from '@material-ui/core/ListSubheader';
 import CheckOutMap from './checkoutMap'
 import Paper from '@material-ui/core/Paper';
-
+import CheckoutForm from './checkoutForm'
+import {loadStripe} from '@stripe/stripe-js';
+import {Elements} from '@stripe/react-stripe-js';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -25,9 +27,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-}
+const stripePromise = loadStripe('pk_test_JJ1eMdKN0Hp4UFJ6kWXWO4ix00jtXzq5XG');
+
 
 const Order = ({handleOpen}) => {
     const classes = useStyles();
@@ -47,8 +48,6 @@ const Order = ({handleOpen}) => {
 
     }
     const decrease = (i) => {
-
-
         if (products[i] && order[i] && order[i].amount > 0) {
             setOrder({
                 ...order, [i]: {
@@ -57,6 +56,10 @@ const Order = ({handleOpen}) => {
                 }
             })
         }
+    }
+
+    const handleStep = (step) => {
+        setStep(step)
     }
 
     useEffect(() => {
@@ -154,15 +157,18 @@ const Order = ({handleOpen}) => {
                         </ListItemText>
                     </ListItem>
                     {step == 2 &&
-                        <div style={{padding: '20px 0', display: 'flex', justifyContent:'space-between'}}>
-                            <Button variant="contained" color="secondary" variant="outlined" onClick={handleOpen}>Abbrechen</Button>
-                            <Button variant="contained" color="primary" onClick={() => setStep(3)}>Bestätigen</Button>
+                    <div>
+                                          <Elements stripe={stripePromise}>
+
+                                          <CheckoutForm handleStep={handleStep}/>
+                                    </Elements>
+           
                         </div>
                     }
                     {step === 3 && 
                     <div>
                     <div style={{height: '300px', position:'relative'}}>
-                        <CheckOutMap/>
+                        <CheckOutMap />
                     </div>
                     <div>Schmidt</div>
                     <div>Bürgerwiese 4, 01069 Dresden</div>
