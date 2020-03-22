@@ -90,7 +90,7 @@ const Order = ({ handleOpen, store }) => {
         setTotalNames(newTotalNames)
     }, [order])
 
-    let orderSring = totalNames && totalNames.map(name => name.amount + 'X ' + name.name)
+    let orderSring = totalNames && totalNames.map(name => name.amount + 'x ' + name.name)
     
     return (
         <div className={classes.root}>
