@@ -64,7 +64,7 @@ export default function SearchAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" >
-            Regio Fresh
+            Erntefrisch
           </Typography>
         </Toolbar>
       </AppBar>
