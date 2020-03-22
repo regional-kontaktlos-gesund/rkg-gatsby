@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const IndexPage = () => {
+const IndexPage = ({location}) => {
   const [stores, setStores] = useState(false)
   const [activeStore, setActiveStore] = useState(false)
   const classes = useStyles();
@@ -55,6 +55,8 @@ const IndexPage = () => {
     fetchData()
   }, [])
 
+  console.log("stores",stores);
+  
   return (
     <Layout>
       <SEO title="Home" />
