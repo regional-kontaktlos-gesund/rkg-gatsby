@@ -33,7 +33,7 @@ const IndexPage = ({location}) => {
 
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Erntefrisch" />
       <div>
         <div style={{ height: '50vh', overflow: 'hidden' }}>
           <MapContainer stores={stores} activeStore={activeStore} />
