@@ -12,7 +12,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-
+import { useFetch  } from '../utils/hooks'
 const useStyles = makeStyles(theme => ({
   root: {
     height: '50vh',
@@ -34,29 +34,12 @@ const useStyles = makeStyles(theme => ({
 
 
 const IndexPage = ({location}) => {
-  const [stores, setStores] = useState(false)
+  // const [stores, setStores] = useState(false)
   const [activeStore, setActiveStore] = useState(false)
   const classes = useStyles();
 
-  const handleStore = (store) => {
-    setActiveStore(store)
-  }
-  const fetchData = () => {
-    fetch('https://rkg-api-602.herokuapp.com/api/stores')
-      .then((response) => response.json())
-      .then((data) => {
-        setStores(data)
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
-  useEffect(() => {
-    fetchData()
-  }, [])
+  const [stores] = useFetch("https://rkg-api-602.herokuapp.com/api/stores");
 
-  console.log("stores",stores);
-  
   return (
     <Layout>
       <SEO title="Home" />
