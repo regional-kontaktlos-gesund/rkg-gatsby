@@ -16,8 +16,8 @@ import "./layout.css"
 const theme = createMuiTheme({
   palette: {
     primary: { 500: '#00874f' }, // custom color in hex
-    secondary : { 'main': '#870038'}
-}
+    secondary : { 'main': '#870038'},
+  }
 });
 
 const Layout = ({ children }) => {

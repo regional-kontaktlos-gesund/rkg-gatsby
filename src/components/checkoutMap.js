@@ -4,7 +4,6 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 const mapStyles = {
     width: '100%',
     height: '300px',
-    maxWidth: '1200px',
     margin: '0 auto',
     padding: '20px 0'
   };
@@ -28,6 +27,7 @@ const CheckOutMap = ({ google }) => {
                 lat: 47.9959,
                 lng: 7.85222
             }}
+            disableDefaultUI={true}
         />
         </Map>
         </React.Fragment>

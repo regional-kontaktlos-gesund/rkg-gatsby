@@ -11,7 +11,7 @@ export const formatPrice = ({ centAmount, currencyCode, fractionDigits }) => {
   }
 
 
-export const fetchData = (enpoint) => {
+export async function fetchData(enpoint){
     fetch('https://rkg-api-602.herokuapp.com/api/'+enpoint)
     .then((response) => response.json())
     .then((data) => {

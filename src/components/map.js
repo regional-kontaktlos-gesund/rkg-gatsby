@@ -46,6 +46,7 @@ const MapContainer = ({ google, stores }) => {
         <Marker
             key={i}
             id={i}
+            _id={store._id}
             name={store.name}
             openingHours={store.openingHours}
             products={store.products}
@@ -65,6 +66,7 @@ const MapContainer = ({ google, stores }) => {
             style={mapStyles}
             initialCenter={{ lat: 51.169872, lng: 10.243474 }}
             onClick={onMapClicked}
+            disableDefaultUI={true}
         >
             <InfoWindow
                 marker={activeMarker}
@@ -100,7 +102,7 @@ const MapContainer = ({ google, stores }) => {
                         </Typography>
                         </CardContent>
                     <CardActions>
-                        <Link to={'/stores/'+activeProps.id} >
+                        <Link to={'/stores/'+activeProps._id} >
                             <Button size="small" color="primary">
                                 Zu den Waren
                             </Button>

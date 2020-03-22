@@ -1,42 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import MediaCard from './card'
 import Order from './order'
-
+import fetchData from '../utils'
 const Store = (props) => {    
-
-    const [open, setOpen] = useState(false)
-    const handleOpen = () => setOpen(!open)
+    const [store, setStore] = useState(false)
+    let endpoint = props.uri.substring(1);
     
+    useEffect(()=> {
+        const fetchData = async () => {
+            fetch('https://rkg-api-602.herokuapp.com/api/'+endpoint)
+            .then((response) => response.json())
+            .then((data) => {
+                setStore(data)
+            })
+            .catch((error) => {
+            console.error('Error:', error);
+            });
+        }
+        fetchData()
+    }, [])
     return(
         <React.Fragment>
-            {/* <div
-                style={{
-                    height: '100%',
-                    minHeight: '80vh',
-                    width: '100%',
-                    display:'flex',
-                    background: 'url(https://images.unsplash.com/photo-1543528176-61b239494933?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2253&q=80)',
-                }}
-            >
-             */}
-                {/* <Typography variant="h1" component="h3" color="textPrimary">
-                Huber Hof
-                </Typography> */}
-                <MediaCard/>
-            {/* </div> */}
-            <div style={{width:'100%', display:'flex', justifyContent: 'center', padding:'20px'}}>
-            <Button onClick={handleOpen} variant="contained" color="primary">Bestellen</Button>
-            </div>
-            <Drawer 
-                anchor="bottom"
-                open={open} 
-                // onClose={toggleDrawer(anchor, false)
-            >
-                <Order handleOpen={handleOpen}/>  
-            </Drawer>
+               {store && <Order store={store} />   }
         </React.Fragment>
     )
 }
