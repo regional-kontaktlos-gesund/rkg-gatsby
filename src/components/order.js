@@ -23,6 +23,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import QRCode from 'qrcode.react'
 import RoomIcon from '@material-ui/icons/Room';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -89,44 +90,51 @@ const Order = ({ handleOpen, store }) => {
         }
         setTotal(newTotal.reduce((a, b) => a + b, 0))
         setTotalNames(newTotalNames)
-    }, [order])
+    }, [order]);
+
+    useEffect(() => {
+        if (step === 4) {
+            setTimeout(function () { setStep(5) }, 2000);
+        }
+    }, [step])
+
 
     let orderSring = totalNames && totalNames.map(name => name.amount + 'x ' + name.name)
-    
+
     return (
         <div className={classes.root}>
-            <div style={{background:'#4bb87c', color: '#ffffff', fontFamily: 'roboto',padding:"20px"}}>
-           {step < 3 && 
-           <div style={{width:'100%',display:'flex',justifyContent:'space-between'}}>
-                <Link to="/">
-                    <IconButton>
-                        <CloseIcon
-                            aria-label="close"
-                            className={classes.margin}
-                        />
-                    </IconButton>
-                </Link>
-                <a target="_blank" href={"https://maps.google.com/?q="+store.latitude+","+store.longitude}>
-                    <IconButton>
-                        <RoomIcon
-                            aria-label="directions"
-                            className={classes.margin}
-                        />
-                    </IconButton>
-                </a>
-            </div>
-            }
+            <div style={{ background: '#4bb87c', color: '#ffffff', fontFamily: 'roboto', padding: "20px" }}>
+                {step < 3 &&
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+                        <Link to="/">
+                            <IconButton>
+                                <CloseIcon
+                                    aria-label="close"
+                                    className={classes.margin}
+                                />
+                            </IconButton>
+                        </Link>
+                        <a target="_blank" href={"https://maps.google.com/?q=" + store.latitude + "," + store.longitude}>
+                            <IconButton>
+                                <RoomIcon
+                                    aria-label="directions"
+                                    className={classes.margin}
+                                />
+                            </IconButton>
+                        </a>
+                    </div>
+                }
                 <Typography>
-                    { step === 1 && store.name}
-                    { step === 2 && 'Einkauf'}
-                    { step === 3 && 'Einkauf'}
-                    { step === 4 && 'Abholung'}
+                    {step === 1 && store.name}
+                    {step === 2 && 'Einkauf'}
+                    {step === 3 && 'Einkauf'}
+                    {step === 4 && 'Abholung'}
 
-                    </Typography>
-                </div>
+                </Typography>
+            </div>
 
             {step === 1 &&
-                <List component="nav" style={{paddingBottom:'200px'}}aria-label="main mailbox folders">
+                <List component="nav" style={{ paddingBottom: '200px' }} aria-label="main mailbox folders">
                     {products.map((product, i) =>
                         <React.Fragment key={product._id}>
                             <ListItem button>
@@ -155,16 +163,16 @@ const Order = ({ handleOpen, store }) => {
 
             {step === 1 &&
                 <Paper
-                elevation={3}
-                style={{ 
-                    position:'fixed', 
-                    bottom: '0',
-                    width: '100%',
-                    background: '#ffffff'
+                    elevation={3}
+                    style={{
+                        position: 'fixed',
+                        bottom: '0',
+                        width: '100%',
+                        background: '#ffffff'
 
-                }} 
+                    }}
                 >
-                    
+
                     <List style={{ padding: '0 20px' }} subheader={<ListSubheader>EINKAUF</ListSubheader>} >
                         <ListItem>
                             <ListItemText>
@@ -183,10 +191,10 @@ const Order = ({ handleOpen, store }) => {
                 </Paper>
             }
 
-            {(step === 2 || step === 3 || step === 4 ) &&
+            {(step != 1) &&
                 <Paper>
-                    <List style={{ padding: '0 20px' }} subheader={<ListSubheader>ABSCHLUSS</ListSubheader>} >
-                        {totalNames && totalNames.map(name => (
+                    <List style={{ padding: '0 20px 200px 20px' }} subheader={<ListSubheader>{step < 5 ? 'ABSCHLUSS' : 'ABHOLUNG'}</ListSubheader>} >
+                        {step !== 5 && totalNames && totalNames.map(name => (
                             <ListItem>
                                 <ListItemText>
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -199,47 +207,93 @@ const Order = ({ handleOpen, store }) => {
                         <Divider />
                         <ListItem>
                             <ListItemText>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <div><b>Gesamt</b></div>
-                                    <div>{formatPrice({ centAmount: total })}</div>
-                                </div>
-                                <div>
-                                {step == 2 &&<Typography variant="subtitle2"><br/>Sie erhalten einen Code zur Abholung nach dem Abschluss der Bestellung. Wir freuen uns auf Sie.</Typography>}
-                                {step == 3 &&<Typography variant="subtitle2"><br/>Ihre Bestellung ist in Kürze zur Abholung bereit. Kommen Sie vorbei.</Typography>}
-                                {step == 4 &&<Typography variant="subtitle2"><br/>Bitte Zeigen Sie diesen Code vor, damit Ihre Bestellung gefunden werden kann.</Typography>}
+                                {step !== 5 &&
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <div><b>Gesamt</b></div>
+                                        <div>{formatPrice({ centAmount: total })}</div>
+                                    </div>
+                                }
 
+                                <div>
+                                    {step == 2 && <Typography variant="subtitle2"><br />Sie erhalten einen Code zur Abholung nach dem Abschluss der Bestellung. Wir freuen uns auf Sie.</Typography>}
+                                    {step == 3 && <Typography variant="subtitle2"><br />Ihre Bestellung ist in Kürze zur Abholung bereit. Kommen Sie vorbei.</Typography>}
+                                    {step == 4 && <Typography variant="subtitle2"><br />Bitte Zeigen Sie diesen Code vor, damit Ihre Bestellung gefunden werden kann.</Typography>}
+                                    {step == 5 && <Typography variant="subtitle2"><br />Vielen Dank, dass Sie bei uns eingekauft haben. Wir freuen uns Sie bald wieder zu sehen</Typography>}
                                 </div>
                             </ListItemText>
                         </ListItem>
                         {step == 2 &&
-                            <div>
+                            <Paper
+                                elevation={3}
+                                style={{
+                                    position: 'fixed',
+                                    bottom: '0',
+                                    width: '100%',
+                                    background: '#ffffff',
+                                    left: 0,
+                                }}
+                            >
                                 <Elements stripe={stripePromise}>
 
                                     <CheckoutForm handleStep={handleStep} />
                                 </Elements>
 
-                            </div>
+                            </Paper>
                         }
                         {step === 3 &&
                             <div>
                                 <div style={{ height: '300px', position: 'relative' }}>
                                     <CheckOutMap />
                                 </div>
-                                <div>Schmidt</div>
-                                <div>Bürgerwiese 4, 01069 Dresden</div>
-                                <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'space-between' }}>
-                                <a href={"https://maps.google.com/?q="+store.latitude+","+store.longitude}><Button variant="contained" color="primary">Navigation</Button></a>
-                                    <Button variant="contained" color="primary" onClick={() => setStep(4)}>Angekommen</Button>
-                                </div>
+                                <Typography variant="h5">{store.name}</Typography>
+                                {/* <Typography variant="body1">{store.address}</Typography> */}
+
+                                <Paper
+                                    elevation={3}
+                                    style={{
+                                        position: 'fixed',
+                                        bottom: '0',
+                                        width: '100%',
+                                        background: '#ffffff',
+                                        left: 0,
+                                        padding: '20px'
+                                    }}
+                                >
+                                 
+                                    <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'space-between' }}>
+                                        <a href={"https://maps.google.com/?q=" + store.latitude + "," + store.longitude}><Button variant="contained" color="primary">Navigation</Button></a>
+                                        <Button variant="contained" color="primary" onClick={() => setStep(4)}>Angekommen</Button>
+                                    </div>
+                                </Paper>
                             </div>
                         }
                         {step === 4 &&
-                            <div style={{paddingBottom: '20px'}}>
-                                <div style={{background: '#9E9E9E', borderRadius: '5px', padding:"40px", display:'flex',justifyContent:'center',alignItems:'center', flexDirection:'column'}}>
-                                <div style={{textAlign:'center', color:'#ffffff',paddingBottom:'20px'}}><Typography color="inherit" variant="h4">spargel-auflauf</Typography></div>
-                                    <QRCode value="http://facebook.github.io/react/" size={200}/>
+                            <div style={{ paddingBottom: '20px' }}>
+                                <div style={{ background: '#9E9E9E', borderRadius: '5px', padding: "40px", display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                                    <div style={{ textAlign: 'center', color: '#ffffff', paddingBottom: '20px' }}><Typography color="inherit" variant="h4">spargel-auflauf</Typography></div>
+                                    <QRCode value="http://facebook.github.io/react/" size={200} />
+                                </div>
+                                <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button variant="contained" color="primary" disabled={true} >Warten</Button>
                                 </div>
                             </div>
+                        }
+                        {step === 5 &&
+                            <div style={{ paddingBottom: '20px' }}>
+                                <div style={{ textAlign: 'center', color: '#ffffff', paddingBottom: '20px' }}>
+                                    <Typography color="inherit" variant="h4">spargel-auflauf</Typography>
+                                    <CheckCircleIcon
+                                        aria-label="check"
+                                        className={classes.margin}
+                                    />
+                                </div>
+                                <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Link to="/">
+                                        <Button variant="contained" color="primary" onClick={() => setStep(4)}>Fertig</Button>
+                                    </Link>
+                                </div>
+                            </div>
+
                         }
                     </List>
                 </Paper>
