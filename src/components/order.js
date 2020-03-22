@@ -32,7 +32,8 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
         position: 'absolute',
         bottom: '0',
-        height: '100%'
+        height: '100%',
+        top: '60px'
     },
 }));
 
@@ -102,8 +103,8 @@ const Order = ({ handleOpen, store }) => {
 
     let orderSring = totalNames && totalNames.map(name => name.amount + 'x ' + name.name)
     let title = ''
-    
-    switch(step){
+
+    switch (step) {
         case 1:
             title = store.name
             break;
@@ -123,92 +124,68 @@ const Order = ({ handleOpen, store }) => {
 
 
     return (
-        <Layout title={title}>
-        <div className={classes.root}>
-            <div>
-                {step < 3 &&
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-                        <Link to="/">
-                            <IconButton>
-                                <CloseIcon
-                                    aria-label="close"
-                                    className={classes.margin}
-                                />
-                            </IconButton>
-                        </Link>
-                        <a target="_blank" href={"https://maps.google.com/?q=" + store.latitude + "," + store.longitude}>
-                            <IconButton>
-                                <RoomIcon
-                                    aria-label="directions"
-                                    className={classes.margin}
-                                />
-                            </IconButton>
-                        </a>
-                    </div>
-                }
-            </div>
-
+        <Layout title={title} store={store} context={step=== 1 ? true : false}>
+            <div className={classes.root}>
             {step === 1 &&
-                <List component="nav" style={{ paddingBottom: '200px' }} aria-label="main mailbox folders">
-                    {products.map((product, i) =>
-                        <React.Fragment key={product._id}>
-                            <ListItem button>
-                                <ListItemText
-                                    primary={product.name}
-                                    secondary={formatPrice({ centAmount: product.price }) + ' / ' + product.unit}
-                                />
-                                <IconButton onClick={() => decrease(i)}>
-                                    <RemoveIcon
-                                        aria-label="remove"
-                                        className={classes.margin}
+                <React.Fragment>
+                    <List component="nav" style={{ paddingBottom: '200px' }} aria-label="main mailbox folders">
+                        {products.map((product, i) =>
+                            <React.Fragment key={product._id}>
+                                <ListItem button>
+                                    <ListItemText
+                                        primary={product.name}
+                                        secondary={formatPrice({ centAmount: product.price }) + ' / ' + product.unit}
                                     />
-                                </IconButton>
-                                <IconButton onClick={() => increase(i)}>
-                                    <AddIcon
-                                        aria-label="add"
-                                        className={classes.margin}
-                                    />
-                                </IconButton>
+                                    <IconButton onClick={() => decrease(i)}>
+                                        <RemoveIcon
+                                            aria-label="remove"
+                                            className={classes.margin}
+                                        />
+                                    </IconButton>
+                                    <IconButton onClick={() => increase(i)}>
+                                        <AddIcon
+                                            aria-label="add"
+                                            className={classes.margin}
+                                        />
+                                    </IconButton>
+                                </ListItem>
+                                <Divider />
+                            </React.Fragment>
+                        )}
+                    </List>
+                    <Paper
+                        elevation={3}
+                        style={{
+                            position: 'fixed',
+                            bottom: '0',
+                            width: '100%',
+                            background: '#ffffff'
+
+                        }}
+                    >
+
+                        <List style={{ padding: '0 20px' }} subheader={<ListSubheader>EINKAUF</ListSubheader>} >
+                            <ListItem>
+                                <ListItemText>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <div>{orderSring && orderSring.join(', ')}</div>
+                                        <div>{formatPrice({ centAmount: total })}</div>
+                                    </div>
+                                </ListItemText>
                             </ListItem>
                             <Divider />
-                        </React.Fragment>
-                    )}
-                </List>
-            }
-
-            {step === 1 &&
-                <Paper
-                    elevation={3}
-                    style={{
-                        position: 'fixed',
-                        bottom: '0',
-                        width: '100%',
-                        background: '#ffffff'
-
-                    }}
-                >
-
-                    <List style={{ padding: '0 20px' }} subheader={<ListSubheader>EINKAUF</ListSubheader>} >
-                        <ListItem>
-                            <ListItemText>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <div>{orderSring && orderSring.join(', ')}</div>
-                                    <div>{formatPrice({ centAmount: total })}</div>
-                                </div>
-                            </ListItemText>
-                        </ListItem>
-                        <Divider />
-                        <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'space-between' }}>
-                            <Link to="/"><Button variant="contained" color="secondary" variant="outlined" variant="outlined">Abbrechen</Button></Link>
-                            <Button variant="contained" color="primary" onClick={() => setStep(2)} disabled={totalNames.length ? false : true}>Bezahlen</Button>
-                        </div>
-                    </List>
-                </Paper>
+                            <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'space-between' }}>
+                                <Link to="/"><Button variant="contained" color="secondary" variant="outlined" variant="outlined">Abbrechen</Button></Link>
+                                <Button variant="contained" color="primary" onClick={() => setStep(2)} disabled={totalNames.length ? false : true}>Bezahlen</Button>
+                            </div>
+                        </List>
+                    </Paper>
+                </React.Fragment>
             }
 
             {(step != 1) &&
                 <Paper>
-                    <List style={{ padding: '60px 20px 200px 20px' }} >
+                    <List style={{ padding: '20px 20px 200px 20px' }} >
                         {step !== 5 && totalNames && totalNames.map(name => (
                             <ListItem>
                                 <ListItemText>
@@ -276,7 +253,7 @@ const Order = ({ handleOpen, store }) => {
                                         padding: '20px'
                                     }}
                                 >
-                                 
+
                                     <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'space-between' }}>
                                         <a href={"https://maps.google.com/?q=" + store.latitude + "," + store.longitude}><Button variant="contained" color="secondary">Navigation</Button></a>
                                         <Button variant="contained" color="primary" onClick={() => setStep(4)}>Angekommen</Button>
@@ -316,7 +293,7 @@ const Order = ({ handleOpen, store }) => {
                 </Paper>
             }
         </div>
-              </Layout>
+              </Layout >
 
     );
 }

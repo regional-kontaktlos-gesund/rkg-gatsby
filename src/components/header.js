@@ -1,12 +1,15 @@
 import React from 'react';
+import Link from 'gatsby'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import RoomIcon from '@material-ui/icons/Room';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,16 +59,43 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SearchAppBar({title}) {
+export default function SearchAppBar({ title, store, context }) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
+        {context &&
+          <div>
+              <a href="../">
+                <IconButton
+                  aria-label="show more"
+                  aria-haspopup="true"
+                  color="inherit"
+                >
+                  <CloseIcon />
+                </IconButton>
+              </a>
+            </div>
+          }
+          
           <Typography variant="h6" >
             {title ? title : 'Erntefrisch'}
           </Typography>
+          {context &&
+            <div style={{ marginLeft: 'auto' }}>
+              <a href={"https://maps.google.com/?q=" + store.latitude + "," + store.longitude}>
+                <IconButton
+                  aria-label="show more"
+                  aria-haspopup="true"
+                  color="inherit"
+                >
+                  <RoomIcon />
+                </IconButton>
+              </a>
+            </div>
+          }
         </Toolbar>
       </AppBar>
     </div>
