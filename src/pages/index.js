@@ -14,16 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import { useFetch  } from '../utils/hooks'
 const useStyles = makeStyles(theme => ({
-  root: {
-    height: '50vh',
-    width: '100%',
-    position: 'fixed',
-    zIndex: '10',
-    bottom: '0',
-    left: '0',
-    overflow: 'auto',
-    background: '#ffffff'
-  },
+
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -48,7 +39,7 @@ const IndexPage = ({location}) => {
           <MapContainer stores={stores} activeStore={activeStore} />
         </div>
         {stores &&  
-          <div className={classes.root}>
+          <div style={{height: '50vh', width: '100%', position: 'fixed', zIndex: '10', bottom: '0', left: '0', overflow: 'auto', background: '#ffffff'}} >
             <List component="nav" aria-label="stores">
               {stores.map(store =>
                   <ListItem button  key={store._id}>
