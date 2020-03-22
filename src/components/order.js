@@ -22,6 +22,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import QRCode from 'qrcode.react'
+import RoomIcon from '@material-ui/icons/Room';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -96,6 +97,7 @@ const Order = ({ handleOpen, store }) => {
         <div className={classes.root}>
             <div style={{background:'#4bb87c', color: '#ffffff', fontFamily: 'roboto',padding:"20px"}}>
            {step < 3 && 
+           <div style={{width:'100%',display:'flex',justifyContent:'space-between'}}>
                 <Link to="/">
                     <IconButton>
                         <CloseIcon
@@ -104,6 +106,15 @@ const Order = ({ handleOpen, store }) => {
                         />
                     </IconButton>
                 </Link>
+                <a target="_blank" href={"https://maps.google.com/?q="+store.latitude+","+store.longitude}>
+                    <IconButton>
+                        <RoomIcon
+                            aria-label="directions"
+                            className={classes.margin}
+                        />
+                    </IconButton>
+                </a>
+            </div>
             }
                 <Typography>
                     { step === 1 && store.name}
