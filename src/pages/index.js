@@ -16,11 +16,11 @@ import Divider from '@material-ui/core/Divider';
 const useStyles = makeStyles(theme => ({
   root: {
     height: '50vh',
-    width:'100%',
-    position:'fixed',
+    width: '100%',
+    position: 'fixed',
     zIndex: '10',
-    bottom:'0',
-    left:'0',
+    bottom: '0',
+    left: '0',
     overflow: 'auto',
     background: '#ffffff'
   },
@@ -54,37 +54,37 @@ const IndexPage = () => {
     }
     fetchData()
   }, [])
-  
+
   return (
     <Layout>
       <SEO title="Home" />
       <div>
-        <div style={{height:'50vh',overflow:'hidden'}}>
+        <div style={{ height: '50vh', overflow: 'hidden' }}>
           <MapContainer stores={stores} activeStore={activeStore} />
         </div>
         <div className={classes.root}>
-        <List component="nav" aria-label="stores">
+          <List component="nav" aria-label="stores">
 
-        {stores.map(store =>
-           <React.Fragment key={store._id}>
+            {stores.map(store =>
+              <React.Fragment key={store._id}>
 
-            <ListItem button>
-            <Link to={'/stores/'+store._id} style={{width:'100%'}}>
+                <ListItem button>
+                  <Link to={'/stores/' + store._id} style={{ width: '100%' }}>
 
-              <ListItemText
-                primary={store.name}
-                secondary={store.products.map(product => product.name+', ')}
-              />
-                                        <Divider />
-              </Link>
+                    <ListItemText
+                      primary={store.name}
+                      secondary={store.products.map(product => product.name + ', ')}
+                    />
+                    <Divider />
+                  </Link>
 
-            </ListItem>
+                </ListItem>
 
 
-          </React.Fragment>
-        )}
-        </List>
-      </div>
+              </React.Fragment>
+            )}
+          </List>
+        </div>
       </div>
     </Layout>
   )

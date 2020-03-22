@@ -63,9 +63,9 @@ const MapContainer = ({ google, stores, activeStore }) => {
     return (
         <Map
             google={google}
-            zoom={6}
+            zoom={8}
             style={mapStyles}
-            initialCenter={{ lat: 51.169872, lng: 10.243474 }}
+            initialCenter={{ lat: 52.499942, lng: 10.521213 }}
             onClick={onMapClicked}
             disableDefaultUI={true}
         >
