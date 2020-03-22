@@ -41,19 +41,20 @@ const IndexPage = () => {
   const handleStore = (store) => {
     setActiveStore(store)
   }
+  const fetchData = () => {
+    fetch('https://rkg-api-602.herokuapp.com/api/stores')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("faa",data);
+        
+        setStores(data)
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
   useEffect(() => {
-    const fetchData = () => {
-      fetch('https://rkg-api-602.herokuapp.com/api/stores')
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("faa",data);
-          
-          setStores(data)
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-    }
+
     fetchData()
   }, [])
 
