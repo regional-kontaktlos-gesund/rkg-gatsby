@@ -3,9 +3,9 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 
 const mapStyles = {
     width: '100%',
-    height: '300px',
+    height: '250px',
     margin: '0 auto',
-    padding: '20px 0'
+    padding: '20px 0 0 20px'
   };
 
 const CheckOutMap = ({ google }) => {
@@ -17,6 +17,7 @@ const CheckOutMap = ({ google }) => {
             zoom={8}
             style={mapStyles}
             className="foo"
+            disableDefaultUI={true}
             initialCenter={{ 
                 lat: 47.9959,
                 lng: 7.85222

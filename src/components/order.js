@@ -259,7 +259,7 @@ const Order = ({ handleOpen, store }) => {
                         }
                         {step === 3 &&
                             <div>
-                                <div style={{ height: '300px', position: 'relative' }}>
+                                <div style={{ height: '250px', position: 'relative' }}>
                                     <CheckOutMap />
                                 </div>
                                 <Typography variant="h5">{store.name}</Typography>
