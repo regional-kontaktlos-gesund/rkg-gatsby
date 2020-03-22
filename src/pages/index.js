@@ -41,12 +41,10 @@ const IndexPage = () => {
   const handleStore = (store) => {
     setActiveStore(store)
   }
-  const fetchData = () => {
+  const fetchData = async() => {
     fetch('https://rkg-api-602.herokuapp.com/api/stores')
       .then((response) => response.json())
       .then((data) => {
-        console.log("faa",data);
-        
         setStores(data)
       })
       .catch((error) => {
