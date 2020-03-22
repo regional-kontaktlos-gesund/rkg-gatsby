@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const IndexPage = () => {
-  const [stores, setStores] = useState([])
+  const [stores, setStores] = useState(false)
   const [activeStore, setActiveStore] = useState(false)
   const classes = useStyles();
 
@@ -46,6 +46,8 @@ const IndexPage = () => {
       fetch('https://rkg-api-602.herokuapp.com/api/stores')
         .then((response) => response.json())
         .then((data) => {
+          console.log("faa",data);
+          
           setStores(data)
         })
         .catch((error) => {
@@ -65,7 +67,7 @@ const IndexPage = () => {
         <div className={classes.root}>
           <List component="nav" aria-label="stores">
 
-            {stores.map(store =>
+            {stores && stores.map(store =>
               <React.Fragment key={store._id}>
 
                 <ListItem button>
