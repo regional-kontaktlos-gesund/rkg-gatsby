@@ -126,10 +126,10 @@ const Order = ({ handleOpen, store }) => {
                 </div>
 
             {step === 1 &&
-                <List component="nav" aria-label="main mailbox folders">
+                <List component="nav" style={{paddingBottom:'200px'}}aria-label="main mailbox folders">
                     {products.map((product, i) =>
                         <React.Fragment key={product._id}>
-                            <ListItem>
+                            <ListItem button>
                                 <ListItemText
                                     primary={product.name}
                                     secondary={formatPrice({ centAmount: product.price }) + ' / ' + product.unit}
@@ -154,7 +154,16 @@ const Order = ({ handleOpen, store }) => {
             }
 
             {step === 1 &&
-                <Paper>
+                <Paper
+                elevation={3}
+                style={{ 
+                    position:'fixed', 
+                    bottom: '0',
+                    width: '100%',
+                    background: '#ffffff'
+
+                }} 
+                >
                     
                     <List style={{ padding: '0 20px' }} subheader={<ListSubheader>EINKAUF</ListSubheader>} >
                         <ListItem>

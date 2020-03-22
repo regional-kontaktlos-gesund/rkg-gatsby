@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <SEO />
+      <SEO title={data.site.siteMetadata.title}/>
         <main id="main">{children}</main>
         {/* <footer>
           © {new Date().getFullYear()}, Built with

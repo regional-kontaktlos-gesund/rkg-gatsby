@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'gatsby'
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import Card from '@material-ui/core/Card';
@@ -11,11 +11,11 @@ import Button from '@material-ui/core/Button';
 
 const mapStyles = {
     width: '100%',
-    height: '100%',
+    height: '50vh',
     margin: '0 auto'
 };
 
-const MapContainer = ({ google, stores }) => {
+const MapContainer = ({ google, stores, activeStore }) => {
 
     const [activeMarker, setActiveMarker] = useState(null)
     const [visible, setVisible] = useState(false)
@@ -26,6 +26,7 @@ const MapContainer = ({ google, stores }) => {
         setActiveMarker(marker)
         setVisible(true)
     }
+
 
     if (navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -44,8 +45,8 @@ const MapContainer = ({ google, stores }) => {
 
     const markers = stores && stores.map((store, i) => (
         <Marker
-            key={i}
-            id={i}
+            key={store._id}
+            id={store._id}
             _id={store._id}
             name={store.name}
             openingHours={store.openingHours}

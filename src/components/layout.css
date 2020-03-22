@@ -12,6 +12,7 @@ body {
   overflow: auto;
 }
 a, a:hover{
+  color: initial;
   text-decoration: none;
 }
 article,
