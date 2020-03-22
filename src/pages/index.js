@@ -18,9 +18,11 @@ const useStyles = makeStyles(theme => ({
     height: '50vh',
     width:'100%',
     position:'fixed',
+    zIndex: '10',
     bottom:'0',
     left:'0',
-    overflow: 'auto'
+    overflow: 'auto',
+    background: '#ffffff'
   },
   paper: {
     padding: theme.spacing(2),
@@ -56,7 +58,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <div >
+      <div>
         <div style={{height:'50vh'}}>
           <MapContainer stores={stores} activeStore={activeStore} />
         </div>
