@@ -59,7 +59,7 @@ const IndexPage = () => {
     <Layout>
       <SEO title="Home" />
       <div>
-        <div style={{height:'50vh'}}>
+        <div style={{height:'50vh',overflow:'hidden'}}>
           <MapContainer stores={stores} activeStore={activeStore} />
         </div>
         <div className={classes.root}>
