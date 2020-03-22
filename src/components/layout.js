@@ -9,7 +9,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
+import SEO from './seo'
 import Header from "./header"
 import "./layout.css"
 
@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Header siteTitle={data.site.siteMetadata.title} />
-
+      <SEO />
         <main id="main">{children}</main>
         {/* <footer>
           © {new Date().getFullYear()}, Built with
