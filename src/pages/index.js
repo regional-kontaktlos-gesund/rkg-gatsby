@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "gatsby"
-
+import axios from 'axios'
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
@@ -42,17 +42,12 @@ const IndexPage = () => {
     setActiveStore(store)
   }
   const fetchData = async() => {
-    fetch('https://rkg-api-602.herokuapp.com/api/stores')
-      .then((response) => response.json())
-      .then((data) => {
-        setStores(data)
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        const result = await axios(
+          'https://rkg-api-602.herokuapp.com/api/stores',
+        );
+        setStores(result.data)
   }
   useEffect(() => {
-
     fetchData()
   }, [])
 
